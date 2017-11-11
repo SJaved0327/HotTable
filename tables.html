@@ -68,22 +68,20 @@
     var currentURL = window.location.origin;
 
     $.ajax({url: currentURL + "/api/waitlist", method: "GET"})
-      .done(function(waitlistData) {
-
+      .done(function(waitlist) {
 
         // Loop through and display each of the customers
-        for (var i=0; i<waitlistData.length; i++){
-
-          // Create the HTML Well (Section) and Add the table content for each reserved table
-          var waitlistSection = $("<div>");
-          waitlistSection.addClass('well');
-          waitlistSection.attr('id', 'waitlistWell-' + i+1)
-          $('#waitinglist').append(waitlistSection);
+        for (var i=0; i<waitlist.length; i++){
 
           var tableNumber = i + 1;
 
+          var waitlistSection = $("<div>");
+          waitlistSection.addClass('well');
+          waitlistSection.attr('id', 'waitlistWell-' + tableNumber);
+          $('#waitinglist').append(waitlistSection);
+
           // Then display the remaining fields in the HTML (Section Name, Date, URL)
-          $("#waitlistWell-"+ i+1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + waitlistData[i].customerID + "</h2>");
+          $("#waitlistWell-"+ tableNumber).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + waitlist[i].uniqueID + "</h2>");
         }
       });
   }
@@ -108,7 +106,7 @@
   // Run Queries!
   // ==========================================
   runTableQuery();
-  //runWaitListQuery();
+  runWaitListQuery();
 
 
 </script>
