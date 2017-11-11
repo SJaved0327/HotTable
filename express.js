@@ -40,11 +40,11 @@ app.get("/tables", function(req, res) {
 //==== RESERVATION PAGE ====//
 
 app.get("/reserve", function(req, res) {
-  res.sendFile(path.join(__dirname, "reservations.html"));
+  res.sendFile(path.join(__dirname, "practice.html"));
 });
 
 //CREATE NEW RESERVATION
-app.post("/reserve", function(req, res) {
+app.post("/api/new", function(req, res) {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body-parser middleware
   var newReservation = req.body;
