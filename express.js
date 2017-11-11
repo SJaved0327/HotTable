@@ -22,44 +22,48 @@ var tables = [];
 //WAITING LIST
 var waitlist = [];
 
-//reservation constructor
-var reservation = (name, phone, email, id) => {
- 
-  this.name = name;
-  this.phone = phone;
-  this.email = email;
-  this.id = id;
-
-};
-
 // Routes
 // =============================================================
 
-// Basic route that sends the user first to the AJAX Page
-//HOME PAGE
+//==== HOME PAGE ====//
+
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-//VIEW TABLES
+//==== TABLES PAGE ====//
+
 app.get("/tables", function(req, res) {
   res.sendFile(path.join(__dirname, "tables.html"));
 });
 
-//MAKE RESERVATION
+//==== RESERVATION PAGE ====//
+
 app.get("/reserve", function(req, res) {
   res.sendFile(path.join(__dirname, "reservations.html"));
 });
 
+//CREATE NEW RESERVATION
+app.post("/reserve", function(req, res) {
+  // req.body hosts is equal to the JSON post sent from the user
+  // This works because of our body-parser middleware
+  var newReservation = req.body;
 
+  console.log(newReservation);
 
+  if (tables.length < 5){
 
+    tables.push(newReservation);
 
+  }else if (tables.length = 5){
 
+    waitlist.push(newReservation);
 
+  };
 
+  res.json(newReservation);
 
-
+});
 
 
 // Starts the server to begin listening
