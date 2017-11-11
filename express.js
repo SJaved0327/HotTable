@@ -53,7 +53,27 @@ app.post("/reserve", function(req, res) {
 
   if (tables.length < 5){
 
+// CREATES NEW RESERVATION
+app.post("/api/new", function(req, res) {
+
+  var newReservation = req.body;
+  newReservation.routeName = newReservation.customerID.replace(/\s+/g, "").toLowerCase();
+
+  console.log(newReservation);
+
+  if (tables.length < 5) {
+
     tables.push(newReservation);
+
+  } else {
+
+    waitlist.push(newReservation);
+
+  }
+
+  res.json(newReservation);
+
+});
 
   }else if (tables.length = 5){
 
