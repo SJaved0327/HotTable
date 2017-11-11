@@ -86,14 +86,13 @@
       var currentURL = window.location.origin;
 
       $.post("/api/new", newReservation)
-      .done(function(tables) {
+      .done(function(waitlist) {
         
-        if (tables.length < 5){
-          alert("Yay! You are Booked");
-        }
-        else{
-          alert("Sorry you are on the waiting list.")
-        }
+        if (waitlist.length >= 1){
+          alert("Sorry you are on the waiting list.");
+        }else{
+        	alert("Yay! You're booked!");
+        };
 
         $('#name').val("");
 

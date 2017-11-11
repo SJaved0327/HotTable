@@ -76,8 +76,7 @@ app.post("/api/new", function(req, res) {
 
   }
 
-  res.json(tables);
-
+  res.json(waitlist);
 
   CheckArrays();
 
