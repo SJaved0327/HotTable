@@ -24,8 +24,8 @@
 
     <div class="panel panel-default">
     <div class="panel-heading"> current Reservation</div>
-    <div class="panel-body" id="currentReservations">
-      
+    <div class="panel-body" id="currentReservation">
+
     </div>
     </div>
 
@@ -33,42 +33,84 @@
 
     <div class="panel panel-default">
     <div class="panel-heading"> Waiting List</div>
-    <div class="panel-body" id="waitingList">
-      
+    <div class="panel-body" id="waitinglist"></div>
     </div>
-    </div>
-<script>
-  window.onload = function() {
-        //var searchedCharacter = $("#character-search").val().trim();
-
-        //searchedCharacter = searchedCharacter.replace(/\s+/g, "").toLowerCase();
-
-        $.get("/api/tables", function(data) {
-          console.log(data);
-          
-          if (data) {
-            for (var i = 0; i < 5; i++){
-              var newDiv = ("<div>");
-              newDiv.attr("data-number", [i]);
-
-                $("#stats").show();
-                $("#name").text(data.name);
-                $("#role").text(data.role);
-                $("#age").text(data.age);
-                $("#force-points").text(data.forcePoints);
 
 
-              $("#currentReservations").append(newDiv);
+    <script type="text/javascript">
 
-            };
-          }
-          else {
-            $("#name").text("The force is not strong with this one. Your character was not found.");
-            $("#stats").hide();
-          }
-          */
-        });
-      };
+
+  function runTableQuery(){
+
+    var currentURL = window.location.origin;
+
+
+    $.ajax({url: currentURL + "/api/tables", method: "GET"})
+      .done(function(tableData) {
+
+        for (var i=0; i<tableData.length; i++){
+          var tableSection = $("<div>");
+          tableSection.addClass('well');
+          tableSection.attr('id', 'tableWell-' + i+1)
+          $('#currentReservation').append(tableSection);
+
+          var tableNumber = i + 1;
+
+          $("#tableWell-"+ i+1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + tableData[i].customerID + "</h2>");
+        }
+      });
+  }
+
+  function runWaitListQuery(){
+
+    var currentURL = window.location.origin;
+
+    $.ajax({url: currentURL + "/api/waitlist", method: "GET"})
+      .done(function(waitlistData) {
+
+
+        // Loop through and display each of the customers
+        for (var i=0; i<waitlistData.length; i++){
+
+          // Create the HTML Well (Section) and Add the table content for each reserved table
+          var waitlistSection = $("<div>");
+          waitlistSection.addClass('well');
+          waitlistSection.attr('id', 'waitlistWell-' + i+1)
+          $('#waitinglist').append(waitlistSection);
+
+          var tableNumber = i + 1;
+
+          // Then display the remaining fields in the HTML (Section Name, Date, URL)
+          $("#waitlistWell-"+ i+1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + waitlistData[i].customerID + "</h2>");
+        }
+      });
+  }
+
+
+  // function clearTable(){
+
+  //   var currentURL = window.location.origin;
+  //   $.ajax({url: currentURL + "/api/clear", method: "POST"})
+
+  // }
+
+  // $("#clear").on('click', function(){
+  //   alert("Clearing...");
+  //   clearTable();
+
+  //   // Refresh the page after data is cleared
+  //   location.reload();
+  // })
+
+
+  // Run Queries!
+  // ==========================================
+  runTableQuery();
+  runWaitListQuery();
+
+
 </script>
+
+
 </body>
 </html>
