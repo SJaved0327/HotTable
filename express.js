@@ -76,7 +76,8 @@ app.post("/api/new", function(req, res) {
 
   }
 
-  res.json(newReservation);
+  res.json(tables);
+
 
   CheckArrays();
 

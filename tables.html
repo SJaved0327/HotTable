@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <!--<link rel="stylesheet" type="text/css" href="styles.css">-->
 
 </head>
 <body>
@@ -37,26 +37,28 @@
     </div>
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
 
   function runTableQuery(){
 
     var currentURL = window.location.origin;
 
-
     $.ajax({url: currentURL + "/api/tables", method: "GET"})
-      .done(function(tableData) {
+      .done(function(data) {
 
-        for (var i=0; i<tableData.length; i++){
-          var tableSection = $("<div>");
-          tableSection.addClass('well');
-          tableSection.attr('id', 'tableWell-' + i+1)
-          $('#currentReservation').append(tableSection);
+        console.log(data);
 
+        for (var i = 0; i < data.length; i++){
+          
           var tableNumber = i + 1;
 
-          $("#tableWell-"+ i+1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + tableData[i].customerID + "</h2>");
+          var tableSection = $("<div>");
+          tableSection.addClass('well');
+          tableSection.attr('id', 'tableWell-' + tableNumber)
+          $('#currentReservation').append(tableSection);
+
+          $("#tableWell-"+ tableNumber).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + data[i].uniqueID + "</h2>");
         }
       });
   }
@@ -106,7 +108,7 @@
   // Run Queries!
   // ==========================================
   runTableQuery();
-  runWaitListQuery();
+  //runWaitListQuery();
 
 
 </script>
