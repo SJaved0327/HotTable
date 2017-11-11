@@ -43,21 +43,10 @@ app.get("/reserve", function(req, res) {
   res.sendFile(path.join(__dirname, "practice.html"));
 });
 
-//CREATE NEW RESERVATION
-app.post("/api/new", function(req, res) {
-  // req.body hosts is equal to the JSON post sent from the user
-  // This works because of our body-parser middleware
-  var newReservation = req.body;
-
-  console.log(newReservation);
-
-  if (tables.length < 5){
-
 // CREATES NEW RESERVATION
 app.post("/api/new", function(req, res) {
 
   var newReservation = req.body;
-  newReservation.routeName = newReservation.customerID.replace(/\s+/g, "").toLowerCase();
 
   console.log(newReservation);
 
@@ -72,19 +61,24 @@ app.post("/api/new", function(req, res) {
   }
 
   res.json(newReservation);
+  
+  CheckArrays();
 
 });
 
-  }else if (tables.length = 5){
+function CheckArrays (){
 
-    waitlist.push(newReservation);
-
+  console.log("----- TABLES -----");
+  for (var i = 0; i < tables.length; i++){
+    console.log(`${[i]}: ${tables[i].customerID}`);
   };
 
-  res.json(newReservation);
+  console.log("----- WAITLIST -----");
+  for (var j = 0; j < waitlist.length; j++){
+    console.log(`${[j]}: ${waitlist[j].customerID}`);
+  };
 
-});
-
+};
 
 // Starts the server to begin listening
 // =============================================================
