@@ -37,6 +37,10 @@ app.get("/tables", function(req, res) {
   res.sendFile(path.join(__dirname, "tables.html"));
 });
 
+//POPULATE CURRENT RESERVATIONS
+
+
+
 //==== RESERVATION PAGE ====//
 
 app.get("/reserve", function(req, res) {
@@ -48,6 +52,7 @@ app.post("/api/new", function(req, res) {
 
   var newReservation = req.body;
 
+  console.log("----- NEW RESERVATION -----");
   console.log(newReservation);
 
   if (tables.length < 5) {
@@ -61,7 +66,7 @@ app.post("/api/new", function(req, res) {
   }
 
   res.json(newReservation);
-  
+
   CheckArrays();
 
 });
@@ -70,12 +75,12 @@ function CheckArrays (){
 
   console.log("----- TABLES -----");
   for (var i = 0; i < tables.length; i++){
-    console.log(`${[i]}: ${tables[i].customerID}`);
+    console.log(`${[i+1]}: ID - ${tables[i].customerID}`);
   };
 
   console.log("----- WAITLIST -----");
   for (var j = 0; j < waitlist.length; j++){
-    console.log(`${[j]}: ${waitlist[j].customerID}`);
+    console.log(`${[j+1]}: ID - ${waitlist[j].customerID}`);
   };
 
 };
